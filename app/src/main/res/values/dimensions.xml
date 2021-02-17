@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_button_xsmall">10dp</dimen>
+    <dimen name="size_button_text_big">24sp</dimen>
+    <dimen name="width_button_xbig">60dp</dimen>
+    <dimen name="width_operation_button_xbig">120dp</dimen>
+    <dimen name="padding_constraint_xbig">100dp</dimen>
+    <dimen name="margin_left_textview_xsmall">10dp</dimen>
+    <dimen name="margin_right_textview_xsmall">10dp</dimen>
+    <dimen name="height_textview_xbig">120dp</dimen>
+    <dimen name="size_textview_text_big">36sp</dimen>
+</resources>
