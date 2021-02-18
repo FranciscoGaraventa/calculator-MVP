@@ -7,4 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="activityMainAppBarColorBoulder">#787575</color>
+    <color name="activityMainOperationColorFlushMahogany">#CF473A</color>
+    <color name="activityMainButtonColorScorpion">#575757</color>
 </resources>
