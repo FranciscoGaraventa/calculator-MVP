@@ -1,5 +1,7 @@
 package com.example.calculator.mvp.contract
 
+import com.example.calculator.util.CalculatorEntity
+
 interface CalculatorContract {
     interface Presenter{
         fun onNumberButtonPressed(number: String)
@@ -7,6 +9,8 @@ interface CalculatorContract {
         fun onDeletePressed()
         fun onClearPressed()
         fun onEqualButtonPressed()
+        fun onResume(entity: CalculatorEntity)
+        fun onSaveInstance(): CalculatorEntity
     }
 
     interface Model{
@@ -16,6 +20,8 @@ interface CalculatorContract {
         fun deleteCharacter()
         fun doEqualOperation()
         fun reset()
+        fun getEntity(): CalculatorEntity
+        fun setEntity(entity: CalculatorEntity)
     }
 
     interface View{

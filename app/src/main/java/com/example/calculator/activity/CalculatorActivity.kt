@@ -3,11 +3,15 @@ package com.example.calculator.activity
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.example.calculator.util.CalculatorEntity
+import com.example.calculator.mvp.view.CalculatorView
+import com.example.calculator.mvp.model.CalculatorModel
+import com.example.calculator.util.Constants.OPERATOR
+import com.example.calculator.util.Constants.FIRST_OPERAND
+import com.example.calculator.util.Constants.SECOND_OPERAND
 import com.example.calculator.databinding.ActivityMainBinding
 import com.example.calculator.mvp.contract.CalculatorContract
-import com.example.calculator.mvp.model.CalculatorModel
 import com.example.calculator.mvp.presenter.CalculatorPresenter
-import com.example.calculator.mvp.view.CalculatorView
 
 class CalculatorActivity : AppCompatActivity() {
 
@@ -46,6 +50,24 @@ class CalculatorActivity : AppCompatActivity() {
         binding.buttonEqual.setOnClickListener {
             presenter.onEqualButtonPressed()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putSerializable(FIRST_OPERAND, presenter.onSaveInstance().getFirstOperand())
+        outState.putSerializable(SECOND_OPERAND, presenter.onSaveInstance().getSecondOperand())
+        outState.putSerializable(OPERATOR, presenter.onSaveInstance().getOperator())
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        presenter.onResume(
+            CalculatorEntity(
+                savedInstanceState.get(FIRST_OPERAND).toString(),
+                savedInstanceState.get(SECOND_OPERAND).toString(),
+                savedInstanceState.get(OPERATOR).toString()
+            )
+        )
     }
 
     private fun setOnClickWithNumberTextButton(button: Button) {

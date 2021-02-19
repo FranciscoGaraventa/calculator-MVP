@@ -1,6 +1,7 @@
 package com.example.calculator.mvp.presenter
 
 import com.example.calculator.mvp.contract.CalculatorContract
+import com.example.calculator.util.CalculatorEntity
 
 class CalculatorPresenter(private val model: CalculatorContract.Model, private val view: CalculatorContract.View) :
     CalculatorContract.Presenter {
@@ -29,4 +30,12 @@ class CalculatorPresenter(private val model: CalculatorContract.Model, private v
         model.doEqualOperation()
         view.setResult(model.getResult())
     }
+
+    override fun onResume(entity: CalculatorEntity) {
+        model.setEntity(entity)
+        view.setResult(model.getResult())
+    }
+
+    override fun onSaveInstance(): CalculatorEntity = model.getEntity()
+
 }

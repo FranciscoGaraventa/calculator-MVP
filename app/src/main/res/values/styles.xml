@@ -8,10 +8,46 @@
         <item name="backgroundTint">@color/activityMainAppBarColorBoulder</item>
     </style>
 
+    <style name="ButtonStyleMarginTop">
+        <item name="android:layout_marginTop">@dimen/margin_top_button_normal</item>
+        <item name="android:layout_marginLeft">@dimen/margin_button_xsmall</item>
+        <item name="android:layout_marginRight">@dimen/margin_button_xsmall</item>
+        <item name="android:textSize">@dimen/size_button_text_big</item>
+        <item name="android:textStyle">bold</item>
+        <item name="backgroundTint">@color/activityMainAppBarColorBoulder</item>
+    </style>
+
+    <style name="ButtonStyleMarginRight">
+        <item name="android:layout_marginRight">@dimen/margin_button_xsmall</item>
+        <item name="android:textSize">@dimen/size_button_text_big</item>
+        <item name="android:textStyle">bold</item>
+        <item name="backgroundTint">@color/activityMainAppBarColorBoulder</item>
+    </style>
+
+    <style name="ButtonStyleMarginLeft">
+        <item name="android:layout_marginLeft">@dimen/margin_button_xsmall</item>
+        <item name="android:textSize">@dimen/size_button_text_big</item>
+        <item name="android:textStyle">bold</item>
+        <item name="backgroundTint">@color/activityMainAppBarColorBoulder</item>
+    </style>
+
+    <style name="ButtonStyleMarginLeftAndRight">
+        <item name="android:textSize">@dimen/size_button_text_big</item>
+        <item name="android:textStyle">bold</item>
+        <item name="backgroundTint">@color/activityMainAppBarColorBoulder</item>
+    </style>
+
     <style name="OpButtonStyle">
         <item name="android:textSize">@dimen/size_button_text_big</item>
-        <item name="android:layout_margin">@dimen/margin_button_xsmall</item>
         <item name="backgroundTint">@color/activityMainOperationColorFlushMahogany</item>
+    </style>
+
+    <style name="OpButtonStyleMarginLeft" parent="OpButtonStyle">
+        <item name="android:layout_marginLeft">@dimen/margin_button_xsmall</item>
+    </style>
+
+    <style name="OpButtonStyleMarginRight" parent="OpButtonStyle">
+        <item name="android:layout_marginRight">@dimen/margin_button_xsmall</item>
     </style>
 
     <style name="ConstraintStyle">
