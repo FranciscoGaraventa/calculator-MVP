@@ -1,71 +1,78 @@
 package com.example.calculator.mvp.model
 
-import com.example.calculator.mvp.contract.CalculatorContract
 import com.example.calculator.util.Constants.DIV
+import com.example.calculator.util.Constants.PLUS
+import com.example.calculator.util.Constants.ZERO
 import com.example.calculator.util.Constants.EMPTY
 import com.example.calculator.util.Constants.MINUS
-import com.example.calculator.util.Constants.PLUS
 import com.example.calculator.util.Constants.TIMES
-import com.example.calculator.util.Constants.ZERO
+import com.example.calculator.util.CalculatorEntity
+import com.example.calculator.mvp.contract.CalculatorContract
 
 class CalculatorModel : CalculatorContract.Model {
 
-    private var firstOperand = EMPTY
-    private var secondOperand = EMPTY
-    private var operator = EMPTY
+    private var entity: CalculatorEntity = CalculatorEntity(ZERO, EMPTY, EMPTY)
 
     private fun isResultZero(): Boolean{
-        return (operator.isEmpty() && firstOperand == ZERO)
+        return (entity.getOperator().isEmpty() && entity.getFirstOperand() == ZERO)
     }
 
     override fun onPressedNumber(number: String) {
         if (isResultZero()) {
-            firstOperand = number
+            entity.setFirstOperand(number)
         } else {
-            if (operator.isEmpty()) {
-                firstOperand = firstOperand.plus(number)
+            if (entity.getOperator().isEmpty()) {
+                entity.setFirstOperand(entity.getFirstOperand().plus(number))
             } else {
-                secondOperand = secondOperand.plus(number)
+                entity.setSecondOperand(entity.getSecondOperand().plus(number))
             }
         }
     }
 
     override fun onPressedOperation(operation: String) {
-        operator = operation
+        entity.setOperator(operation)
     }
 
-    override fun getResult(): String = "$firstOperand$operator$secondOperand"
+    override fun getResult(): String = entity.toString()
 
     override fun deleteCharacter() {
-        if (secondOperand.isNotEmpty()) {
-            secondOperand = secondOperand.substring(0, secondOperand.length - 1)
+        if (entity.getSecondOperand().isNotEmpty()) {
+            entity.setSecondOperand(entity.getSecondOperand().substring(0, entity.getSecondOperand().length - 1))
         } else {
-            if (operator.isNotEmpty()) {
-                operator = EMPTY
+            if (entity.getOperator().isNotEmpty()) {
+                entity.setOperator(EMPTY)
             } else {
-                if (firstOperand.isNotEmpty()) {
-                    firstOperand = firstOperand.substring(0, firstOperand.length - 1)
+                if (entity.getFirstOperand().isNotEmpty()) {
+                    entity.setFirstOperand(entity.getFirstOperand().substring(0, entity.getFirstOperand().length - 1))
                 }
-                if (firstOperand.isEmpty()) firstOperand = ZERO
+                if (entity.getFirstOperand().isEmpty()) entity.setFirstOperand(ZERO)
             }
         }
     }
 
     override fun doEqualOperation() {
-        when (operator) {
-            PLUS -> firstOperand = (firstOperand.toInt().plus(secondOperand.toInt())).toString()
-            MINUS -> firstOperand = (firstOperand.toInt().minus(secondOperand.toInt())).toString()
-            TIMES -> firstOperand = (firstOperand.toInt().times(secondOperand.toInt())).toString()
-            DIV -> firstOperand = (firstOperand.toInt().div(secondOperand.toInt())).toString()
+        when (entity.getOperator()) {
+            PLUS -> entity.setFirstOperand((entity.getFirstOperand().toInt().plus(entity.getSecondOperand().toInt())).toString())
+            MINUS -> entity.setFirstOperand((entity.getFirstOperand().toInt().minus(entity.getSecondOperand().toInt())).toString())
+            TIMES -> entity.setFirstOperand((entity.getFirstOperand().toInt().times(entity.getSecondOperand().toInt())).toString())
+            DIV -> entity.setFirstOperand((entity.getFirstOperand().toInt().div(entity.getSecondOperand().toInt())).toString())
         }
-        operator = EMPTY
-        secondOperand = EMPTY
+        entity.setOperator(EMPTY)
+        entity.setSecondOperand(EMPTY)
     }
 
     override fun reset() {
-        firstOperand = ZERO
-        secondOperand = EMPTY
-        operator = EMPTY
+        entity.setFirstOperand(ZERO)
+        entity.setSecondOperand(EMPTY)
+        entity.setOperator(EMPTY)
+    }
+
+    override fun getEntity(): CalculatorEntity = entity
+
+    override fun setEntity(entity: CalculatorEntity) {
+        this.entity.setFirstOperand(entity.getFirstOperand())
+        this.entity.setSecondOperand(entity.getSecondOperand())
+        this.entity.setOperator(entity.getOperator())
     }
 
 }

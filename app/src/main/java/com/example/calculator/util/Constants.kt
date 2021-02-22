@@ -7,4 +7,7 @@ object Constants {
     const val MINUS = "-"
     const val DIV = "%"
     const val TIMES = "x"
+    const val FIRST_OPERAND = "firstOperand"
+    const val SECOND_OPERAND = "secondOperand"
+    const val OPERATOR = "operator"
 }
