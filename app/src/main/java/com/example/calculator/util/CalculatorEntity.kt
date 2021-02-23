@@ -15,4 +15,5 @@ class CalculatorEntity(private var firstOperand: String, private var secondOpera
     override fun toString(): String {
         return "$firstOperand$operator$secondOperand"
     }
+
 }

@@ -8,12 +8,17 @@ import com.example.calculator.util.Constants.MINUS
 import com.example.calculator.util.Constants.TIMES
 import com.example.calculator.util.CalculatorEntity
 import com.example.calculator.mvp.contract.CalculatorContract
+import com.example.calculator.util.Constants.COMA
+import com.example.calculator.util.Constants.DOT
+import com.example.calculator.util.Constants.PATTERN
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 class CalculatorModel : CalculatorContract.Model {
 
     private var entity: CalculatorEntity = CalculatorEntity(ZERO, EMPTY, EMPTY)
 
-    private fun isResultZero(): Boolean{
+    private fun isResultZero(): Boolean {
         return (entity.getOperator().isEmpty() && entity.getFirstOperand() == ZERO)
     }
 
@@ -30,7 +35,22 @@ class CalculatorModel : CalculatorContract.Model {
     }
 
     override fun onPressedOperation(operation: String) {
-        entity.setOperator(operation)
+        if (operation == MINUS) {
+            if (isResultZero()) {
+                entity.setFirstOperand(operation)
+            } else {
+                if (entity.getOperator().isEmpty()) {
+                    entity.setOperator(operation)
+                } else {
+                    if (entity.getSecondOperand().isEmpty()) {
+                        entity.setSecondOperand(operation)
+                    }
+                }
+            }
+        } else {
+            if (entity.getSecondOperand().isEmpty())
+                entity.setOperator(operation)
+        }
     }
 
     override fun getResult(): String = entity.toString()
@@ -50,12 +70,18 @@ class CalculatorModel : CalculatorContract.Model {
         }
     }
 
+    private fun roundDecimal(number: Double): String {
+        val df = DecimalFormat(PATTERN)
+        df.roundingMode = RoundingMode.CEILING
+        return df.format(number).replace(COMA, DOT)
+    }
+
     override fun doEqualOperation() {
         when (entity.getOperator()) {
-            PLUS -> entity.setFirstOperand((entity.getFirstOperand().toInt().plus(entity.getSecondOperand().toInt())).toString())
-            MINUS -> entity.setFirstOperand((entity.getFirstOperand().toInt().minus(entity.getSecondOperand().toInt())).toString())
-            TIMES -> entity.setFirstOperand((entity.getFirstOperand().toInt().times(entity.getSecondOperand().toInt())).toString())
-            DIV -> entity.setFirstOperand((entity.getFirstOperand().toInt().div(entity.getSecondOperand().toInt())).toString())
+            PLUS -> entity.setFirstOperand(roundDecimal(entity.getFirstOperand().toDouble().plus(entity.getSecondOperand().toDouble())))
+            MINUS -> entity.setFirstOperand(roundDecimal(entity.getFirstOperand().toDouble().minus(entity.getSecondOperand().toDouble())))
+            TIMES -> entity.setFirstOperand(roundDecimal(entity.getFirstOperand().toDouble().times(entity.getSecondOperand().toDouble())))
+            DIV -> entity.setFirstOperand(roundDecimal(entity.getFirstOperand().toDouble().div(entity.getSecondOperand().toDouble())))
         }
         entity.setOperator(EMPTY)
         entity.setSecondOperand(EMPTY)

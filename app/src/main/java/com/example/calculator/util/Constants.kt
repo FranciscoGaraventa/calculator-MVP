@@ -10,4 +10,7 @@ object Constants {
     const val FIRST_OPERAND = "firstOperand"
     const val SECOND_OPERAND = "secondOperand"
     const val OPERATOR = "operator"
+    const val COMA = ","
+    const val DOT = "."
+    const val PATTERN = "#.##"
 }
