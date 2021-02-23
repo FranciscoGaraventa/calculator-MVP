@@ -12,6 +12,8 @@ import com.example.calculator.util.Constants.SECOND_OPERAND
 import com.example.calculator.databinding.ActivityMainBinding
 import com.example.calculator.mvp.contract.CalculatorContract
 import com.example.calculator.mvp.presenter.CalculatorPresenter
+import com.example.calculator.util.CalculatorEnum
+import com.example.calculator.util.Constants.ENUM
 
 class CalculatorActivity : AppCompatActivity() {
 
@@ -57,6 +59,7 @@ class CalculatorActivity : AppCompatActivity() {
         outState.putSerializable(FIRST_OPERAND, presenter.onSaveInstance().getFirstOperand())
         outState.putSerializable(SECOND_OPERAND, presenter.onSaveInstance().getSecondOperand())
         outState.putSerializable(OPERATOR, presenter.onSaveInstance().getOperator())
+        outState.putSerializable(ENUM, presenter.onSaveInstance().getEnum())
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -65,7 +68,8 @@ class CalculatorActivity : AppCompatActivity() {
             CalculatorEntity(
                 savedInstanceState.get(FIRST_OPERAND).toString(),
                 savedInstanceState.get(SECOND_OPERAND).toString(),
-                savedInstanceState.get(OPERATOR).toString()
+                savedInstanceState.get(OPERATOR).toString(),
+                CalculatorEnum.valueOf(savedInstanceState.get(ENUM).toString())
             )
         )
     }

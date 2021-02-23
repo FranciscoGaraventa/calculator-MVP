@@ -3,7 +3,7 @@ package com.example.calculator.mvp.contract
 import com.example.calculator.util.CalculatorEntity
 
 interface CalculatorContract {
-    interface Presenter{
+    interface Presenter {
         fun onNumberButtonPressed(number: String)
         fun onOperationButtonPressed(operation: String)
         fun onDeletePressed()
@@ -13,7 +13,7 @@ interface CalculatorContract {
         fun onSaveInstance(): CalculatorEntity
     }
 
-    interface Model{
+    interface Model {
         fun onPressedNumber(number: String)
         fun onPressedOperation(operation: String)
         fun getResult(): String
@@ -24,7 +24,8 @@ interface CalculatorContract {
         fun setEntity(entity: CalculatorEntity)
     }
 
-    interface View{
+    interface View {
         fun setResult(result: String)
+        fun showMessageError(error: String)
     }
 }

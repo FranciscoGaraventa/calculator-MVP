@@ -4,6 +4,7 @@ import com.example.calculator.mvp.contract.CalculatorContract
 import com.example.calculator.mvp.model.CalculatorModel
 import com.example.calculator.mvp.presenter.CalculatorPresenter
 import com.example.calculator.util.CalculatorEntity
+import com.example.calculator.util.CalculatorEnum
 import com.example.calculator.util.Constants.DIV
 import com.example.calculator.util.Constants.EMPTY
 import com.example.calculator.util.Constants.MINUS
@@ -37,7 +38,7 @@ class CalculatorPresenterUnitTest {
 
     @Before
     fun setUp() {
-        model.setEntity(CalculatorEntity(ZERO, EMPTY, EMPTY))
+        model.setEntity(CalculatorEntity(ZERO, EMPTY, EMPTY, CalculatorEnum.NONE))
         presenter = CalculatorPresenter(model, view)
     }
 
@@ -108,6 +109,32 @@ class CalculatorPresenterUnitTest {
         model.getEntity().setSecondOperand(NUMBER_FIFTY_TWO)
         presenter.onClearPressed()
         verify(view).setResult(ZERO)
+    }
+
+    @Test
+    fun `checked message error when a operation is incomplete`() {
+        model.getEntity().setFirstOperand(NUMBER_TEN)
+        model.getEntity().setOperator(DIV)
+        presenter.onEqualButtonPressed()
+        assertEquals(CalculatorEnum.INCOMPLETE_OPERATION, model.getEntity().getEnum())
+    }
+
+    @Test
+    fun `checked message error for division by zero`() {
+        model.getEntity().setFirstOperand(NUMBER_TEN)
+        model.getEntity().setOperator(DIV)
+        model.getEntity().setSecondOperand(ZERO)
+        presenter.onEqualButtonPressed()
+        assertEquals(CalculatorEnum.DIVISION_BY_ZERO, model.getEntity().getEnum())
+    }
+
+    @Test
+    fun `checked message error for invalid number of operation`() {
+        model.getEntity().setFirstOperand(MINUS)
+        model.getEntity().setOperator(TIMES)
+        model.getEntity().setSecondOperand(NUMBER_FIFTY_TWO)
+        presenter.onEqualButtonPressed()
+        assertEquals(CalculatorEnum.INVALID_NUMBER, model.getEntity().getEnum())
     }
 }
 
